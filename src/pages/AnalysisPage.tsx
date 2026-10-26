@@ -10,6 +10,8 @@ type AnalysisState = 'idle' | 'working' | 'done' | 'error'
 type MediaKind = 'audio' | 'video'
 type TraceMeta = { fileSizeBytes: number; fileType: string; comparisonMs: number | null }
 
+const SHOW_DEV_TOOLS = import.meta.env.DEV || import.meta.env.VITE_SHOW_DEV_TOOLS === 'true'
+
 function mediaKindFor(file: File): MediaKind {
   return file.type.startsWith('video/') || /\.(mp4|m4v|mov|webm)$/i.test(file.name)
     ? 'video'
@@ -289,11 +291,11 @@ export function AnalysisPage() {
               <video src={audioUrl} controls preload="metadata" playsInline />
             </div>
           )}
-          {import.meta.env.DEV && (
+          {SHOW_DEV_TOOLS && (
             <div className="demo-recordings">
               <span className="demo-recordings__heading">
                 <Code2 size={18} />
-                <span><strong>DEV MODE</strong><small>Controlled audio fixtures · hidden in production</small></span>
+                <span><strong>DEV MODE</strong><small>Controlled audio fixtures · evaluation build</small></span>
               </span>
               <div>
                 {demoRecordings.map((recording) => (
@@ -488,12 +490,12 @@ export function AnalysisPage() {
           </section>
         )}
 
-        {result && import.meta.env.DEV && (
+        {result && SHOW_DEV_TOOLS && (
           <section className="transcription-panel transcription-panel--dev">
             <details open>
               <summary>
                 <Code2 size={18} />
-                <span><strong>ENGINEERING TRACE · DEV ONLY</strong><small>How this result was produced · hidden in production</small></span>
+                <span><strong>ENGINEERING TRACE · DEV MODE</strong><small>How this result was produced · evaluation build</small></span>
               </summary>
               {analysis && referenceScore && (
                 <div className="engineering-trace">
