@@ -1,6 +1,8 @@
-# MusicAID — AI Music Teacher MVP
+# MusicAID
 
-Working multi-instrument MVP for AI-assisted music practice and performance analysis.
+A reference-based performance analysis MVP for piano and guitar practice.
+
+**Live demo:** https://musicaid-mvp.vercel.app
 
 ## Current flow
 
@@ -9,9 +11,10 @@ Working multi-instrument MVP for AI-assisted music practice and performance anal
 3. Review tempo, key/register, coverage, note and timing errors.
 4. Play a complete take or click a measure to hear it in context.
 
-The catalogue contains monophonic Jingle Bells, a two-hand Titanic excerpt and
-a polyphonic Californication guitar arpeggio. Each has ten controlled one-click
-DEV scenarios, from a perfect take to targeted errors and an unrelated melody.
+The catalogue contains a monophonic Jingle Bells exercise, a two-hand piano
+excerpt and a polyphonic guitar arpeggio. Each piece has controlled fixtures for
+repeatable checks: perfect, slower, transposed, partial, overplayed and several
+error cases.
 
 The analysis screen runs Spotify Basic Pitch locally in the browser. It decodes uploaded audio or the audio track from an MP4/WebM/MOV video, resamples it to mono 22.05 kHz and sends typed note events—not the media file—to FastAPI. The backend aligns them to the reference MIDI and returns pitch, missing, extra and timing errors with measure/beat context and a final assessment.
 
@@ -82,14 +85,14 @@ This CPU-only diagnostic is slower than browser inference, which can use WebGL.
 - parse three MIDI references (monophonic piano, two-hand piano and ringing guitar arpeggio);
 - expose generic per-piece reference and analysis routes;
 - map every note to seconds, measure and beat;
-- align performed note events through `POST /api/analyze/jingle-bells`;
+- align performed note events through the three `/api/analyze/*` routes;
 - merge short transcription fragments and classify wrong, missing, extra and timing errors;
 - produce accuracy, problematic measures and practice recommendations;
 - normalize consistent tempo and transposition while preserving musical error context;
 - validate routes, polyphonic edge cases and all 30 WAV fixtures with automated tests.
 
-## Next slice
+## Known limits
 
-- tune guitar AMT thresholds against a real amp/acoustic recording;
-- add instrument-aware transcription profiles beyond the current piano/guitar split;
-- record the architecture and product demo.
+- Polyphonic guitar recordings still produce more transcription artifacts than clean piano recordings.
+- The current catalogue uses fixed reference MIDI files rather than user-supplied scores.
+- Browser inference is tuned for short recordings; production-scale processing would move to queued workers and persistent storage.
