@@ -1,0 +1,29 @@
+{
+  "name": "ai-music-teacher",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "generate:midi": "node scripts/generate-jingle-bells-midi.mjs && node scripts/generate-titanic-midi.mjs && node scripts/generate-californication-midi.mjs",
+    "test:ml": "node --experimental-strip-types scripts/smoke-basic-pitch.mjs",
+    "test:monophonic": "node --experimental-strip-types scripts/test-monophonic-filter.ts",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json"
+  },
+  "dependencies": {
+    "@spotify/basic-pitch": "^1.0.1",
+    "@vitejs/plugin-react": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest"
+  }
+}

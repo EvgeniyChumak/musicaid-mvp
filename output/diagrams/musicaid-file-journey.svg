@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">MusicAID file journey</title>
+  <desc id="desc">The browser decodes a recording, runs Basic Pitch and instrument cleanup, then sends note-event JSON to FastAPI for reference MIDI alignment, scoring and feedback.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1 1 11 6 1 11Z" fill="#17171b"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#17171b" flood-opacity=".08"/>
+    </filter>
+    <style>
+      .bg { fill: #f5f3ee; }
+      .ink { fill: #17171b; }
+      .muted { fill: #77737d; }
+      .eyebrow { font: 700 17px ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 2px; }
+      .title { font: 750 52px Inter, Arial, sans-serif; letter-spacing: -1.8px; }
+      .lead { font: 400 22px Inter, Arial, sans-serif; }
+      .lane { font: 700 15px ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 1.5px; }
+      .step { font: 700 22px Inter, Arial, sans-serif; }
+      .detail { font: 400 16px Inter, Arial, sans-serif; }
+      .number { font: 750 17px ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .chip { font: 700 13px ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .limitTitle { font: 750 22px Inter, Arial, sans-serif; }
+      .limit { font: 500 17px Inter, Arial, sans-serif; }
+      .arrow { fill: none; stroke: #17171b; stroke-width: 3; marker-end: url(#arrow); }
+      .card { stroke: #dedbd3; stroke-width: 2; filter: url(#shadow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+  <text x="84" y="75" class="eyebrow" fill="#50632c">MUSICAID / FILE JOURNEY</text>
+  <text x="84" y="137" class="title ink">From recording to explainable feedback</text>
+  <text x="84" y="177" class="lead muted">The media stays in the browser. Only cleaned musical events cross the API boundary.</text>
+
+  <text x="86" y="235" class="lane muted">BROWSER · LOCAL ML · STEPS 1–4</text>
+  <text x="84" y="445" class="lane muted">UI · STEP 8</text>
+  <text x="1062" y="445" class="lane muted">API · FASTAPI · STEPS 5–7</text>
+
+  <g transform="translate(84 260)">
+    <rect class="card" width="260" height="156" rx="22" fill="#c9eee7"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">01</text>
+    <text x="24" y="91" class="step ink">Upload media</text>
+    <text x="24" y="120" class="detail muted">MP3 / WAV / MP4 / WebM</text>
+    <text x="24" y="143" class="detail muted">Original file stays local</text>
+  </g>
+
+  <path class="arrow" d="M354 338 H395"/>
+
+  <g transform="translate(410 260)">
+    <rect class="card" width="260" height="156" rx="22" fill="#fffdfa"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">02</text>
+    <text x="24" y="91" class="step ink">Prepare sound</text>
+    <text x="24" y="120" class="detail muted">Decode video or audio</text>
+    <text x="24" y="143" class="detail muted">Mono · 22.05 kHz</text>
+  </g>
+
+  <path class="arrow" d="M680 338 H721"/>
+
+  <g transform="translate(736 260)">
+    <rect class="card" width="260" height="156" rx="22" fill="#e5defe"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">03</text>
+    <text x="24" y="91" class="step ink">Transcribe</text>
+    <text x="24" y="120" class="detail muted">Basic Pitch / TensorFlow.js</text>
+    <text x="24" y="143" class="detail muted">Pitch · onset · duration</text>
+  </g>
+
+  <path class="arrow" d="M1006 338 H1047"/>
+
+  <g transform="translate(1062 260)">
+    <rect class="card" width="260" height="156" rx="22" fill="#ffe5a3"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">04</text>
+    <text x="24" y="91" class="step ink">Clean events</text>
+    <text x="24" y="120" class="detail muted">Instrument-specific profile</text>
+    <text x="24" y="143" class="detail muted">Remove likely artifacts</text>
+  </g>
+
+  <path class="arrow" d="M1322 338 H1395 V486 H1322"/>
+
+  <g transform="translate(1062 455)">
+    <rect class="card" width="260" height="156" rx="22" fill="#17171b"/>
+    <circle cx="38" cy="39" r="23" fill="#c9ff63"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#17171b">05</text>
+    <text x="24" y="91" class="step" fill="#fff">Send note JSON</text>
+    <text x="24" y="120" class="detail" fill="#c9c6ce">POST /api/analyze/:piece</text>
+    <text x="24" y="143" class="detail" fill="#c9c6ce">No media upload</text>
+  </g>
+
+  <path class="arrow" d="M1052 533 H1011"/>
+
+  <g transform="translate(736 455)">
+    <rect class="card" width="260" height="156" rx="22" fill="#c9eee7"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">06</text>
+    <text x="24" y="91" class="step ink">Load reference</text>
+    <text x="24" y="120" class="detail muted">Parse selected MIDI</text>
+    <text x="24" y="143" class="detail muted">Pitch · measure · beat</text>
+  </g>
+
+  <path class="arrow" d="M726 533 H685"/>
+
+  <g transform="translate(410 455)">
+    <rect class="card" width="260" height="156" rx="22" fill="#dbe8f3"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">07</text>
+    <text x="24" y="91" class="step ink">Align twice</text>
+    <text x="24" y="120" class="detail muted">Sequence → tempo → timing</text>
+    <text x="24" y="143" class="detail muted">Key and partial-play aware</text>
+  </g>
+
+  <path class="arrow" d="M400 533 H359"/>
+
+  <g transform="translate(84 455)">
+    <rect class="card" width="260" height="156" rx="22" fill="#c9ff63"/>
+    <circle cx="38" cy="39" r="23" fill="#17171b"/>
+    <text x="38" y="45" text-anchor="middle" class="number" fill="#fff">08</text>
+    <text x="24" y="91" class="step ink">Explain result</text>
+    <text x="24" y="120" class="detail muted">Score · errors · measures</text>
+    <text x="24" y="143" class="detail muted">Playback · recommendations</text>
+  </g>
+
+  <g transform="translate(84 673)">
+    <rect width="1432" height="150" rx="24" fill="#fffdfa" stroke="#dedbd3" stroke-width="2"/>
+    <text x="28" y="42" class="limitTitle ink">Current MVP boundaries</text>
+
+    <g transform="translate(28 65)">
+      <rect width="249" height="53" rx="14" fill="#f0ede6"/>
+      <text x="17" y="22" class="chip muted">INPUT</text>
+      <text x="17" y="43" class="limit ink">Short recordings · max 60 s</text>
+    </g>
+    <g transform="translate(292 65)">
+      <rect width="249" height="53" rx="14" fill="#f0ede6"/>
+      <text x="17" y="22" class="chip muted">MODE</text>
+      <text x="17" y="43" class="limit ink">Post-performance, not live</text>
+    </g>
+    <g transform="translate(556 65)">
+      <rect width="249" height="53" rx="14" fill="#f0ede6"/>
+      <text x="17" y="22" class="chip muted">REFERENCE</text>
+      <text x="17" y="43" class="limit ink">Selected piece needs MIDI</text>
+    </g>
+    <g transform="translate(820 65)">
+      <rect width="249" height="53" rx="14" fill="#f0ede6"/>
+      <text x="17" y="22" class="chip muted">BEST CASE</text>
+      <text x="17" y="43" class="limit ink">Clear piano or arpeggio</text>
+    </g>
+    <g transform="translate(1084 65)">
+      <rect width="320" height="53" rx="14" fill="#f0ede6"/>
+      <text x="17" y="22" class="chip muted">KNOWN HARD CASES</text>
+      <text x="17" y="43" class="limit ink">Pedal · reverb · dense polyphony</text>
+    </g>
+  </g>
+</svg>

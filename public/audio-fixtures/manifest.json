@@ -1,0 +1,684 @@
+{
+  "reference": "public/midi/jingle-bells-beginner.mid",
+  "references": {
+    "jingle-bells": "public/midi/jingle-bells-beginner.mid",
+    "titanic-theme": "public/midi/titanic-theme-easy.mid",
+    "californication-guitar": "public/midi/californication-guitar-easy.mid"
+  },
+  "sample_rate_hz": 22050,
+  "channels": 1,
+  "sample_width_bits": 16,
+  "provenance": "Deterministic synthetic piano- or plucked-string audio generated from the reference MIDI; not a real recording and not ML output.",
+  "fixtures": [
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-perfect.wav",
+      "description": "Reference performance without intentionally injected errors.",
+      "duration_seconds": 16.6,
+      "expected_outcome": null,
+      "expected_errors": []
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-slower.wav",
+      "description": "The complete performance is played consistently at 80 BPM instead of 120 BPM.",
+      "duration_seconds": 24.6,
+      "expected_outcome": "High accuracy with an 80 BPM tempo notice.",
+      "expected_errors": [
+        {
+          "type": "tempo_change",
+          "reference_bpm": 120,
+          "performed_bpm": 80
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-transposed.wav",
+      "description": "The complete melody is played two semitones above the reference.",
+      "duration_seconds": 16.6,
+      "expected_outcome": "High relative accuracy with a D major transposition notice.",
+      "expected_errors": [
+        {
+          "type": "transposition",
+          "semitones": 2,
+          "from": "C major",
+          "to": "D major"
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-partial.wav",
+      "description": "Only the first four measures are attempted.",
+      "duration_seconds": 8.6,
+      "expected_outcome": "Score only the attempted section and report 44% completion.",
+      "expected_errors": [
+        {
+          "type": "partial_performance",
+          "played_notes": 11,
+          "unplayed_notes": 14
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-overplayed.wav",
+      "description": "The complete piece is followed by two additional notes.",
+      "duration_seconds": 17.6,
+      "expected_outcome": "Complete performance with two notes after the reference ending.",
+      "expected_errors": [
+        {
+          "type": "overplayed",
+          "extra_notes_after_end": 2
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-wrong-note.wav",
+      "description": "One deliberately incorrect pitch in measure 3.",
+      "duration_seconds": 16.6,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 7,
+          "measure": 3,
+          "beat": 2.0,
+          "expected": "G4",
+          "performed": "F4"
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-late-note.wav",
+      "description": "One note starts 300 ms late in measure 6.",
+      "duration_seconds": 16.6,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "late_note",
+          "reference_note_index": 16,
+          "measure": 6,
+          "beat": 2.0,
+          "expected": "E4",
+          "offset_ms": 300
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-mixed-errors.wav",
+      "description": "Pitch, omission, timing and extra-note errors in one performance.",
+      "duration_seconds": 16.6,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 7,
+          "measure": 3,
+          "beat": 2.0,
+          "expected": "G4",
+          "performed": "F4"
+        },
+        {
+          "type": "missed_note",
+          "reference_note_index": 15,
+          "measure": 6,
+          "beat": 1.0,
+          "expected": "F4"
+        },
+        {
+          "type": "late_note",
+          "reference_note_index": 22,
+          "measure": 7,
+          "beat": 4.0,
+          "expected": "E4",
+          "offset_ms": 280
+        },
+        {
+          "type": "extra_note",
+          "measure": 7,
+          "beat": 3.5,
+          "performed": "C5"
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "jingle-bells-very-poor.wav",
+      "description": "The full rhythm is preserved, but every pitch is wrong without a consistent transposition.",
+      "duration_seconds": 16.6,
+      "expected_outcome": "Approximately 0% accuracy against Jingle Bells.",
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 0,
+          "measure": 1,
+          "beat": 1.0,
+          "expected": "E4",
+          "performed": "F4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 1,
+          "measure": 1,
+          "beat": 2.0,
+          "expected": "E4",
+          "performed": "G4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 2,
+          "measure": 1,
+          "beat": 3.0,
+          "expected": "E4",
+          "performed": "A#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 3,
+          "measure": 2,
+          "beat": 1.0,
+          "expected": "E4",
+          "performed": "C5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 4,
+          "measure": 2,
+          "beat": 2.0,
+          "expected": "E4",
+          "performed": "D5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 5,
+          "measure": 2,
+          "beat": 3.0,
+          "expected": "E4",
+          "performed": "F4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 6,
+          "measure": 3,
+          "beat": 1.0,
+          "expected": "E4",
+          "performed": "G4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 7,
+          "measure": 3,
+          "beat": 2.0,
+          "expected": "G4",
+          "performed": "C#5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 8,
+          "measure": 3,
+          "beat": 3.0,
+          "expected": "C4",
+          "performed": "G#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 9,
+          "measure": 3,
+          "beat": 4.0,
+          "expected": "D4",
+          "performed": "C5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 10,
+          "measure": 4,
+          "beat": 1.0,
+          "expected": "E4",
+          "performed": "F4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 11,
+          "measure": 5,
+          "beat": 1.0,
+          "expected": "F4",
+          "performed": "G#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 12,
+          "measure": 5,
+          "beat": 2.0,
+          "expected": "F4",
+          "performed": "B4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 13,
+          "measure": 5,
+          "beat": 3.0,
+          "expected": "F4",
+          "performed": "C#5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 14,
+          "measure": 5,
+          "beat": 4.0,
+          "expected": "F4",
+          "performed": "D#5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 15,
+          "measure": 6,
+          "beat": 1.0,
+          "expected": "F4",
+          "performed": "F#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 16,
+          "measure": 6,
+          "beat": 2.0,
+          "expected": "E4",
+          "performed": "G4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 17,
+          "measure": 6,
+          "beat": 3.0,
+          "expected": "E4",
+          "performed": "A#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 18,
+          "measure": 6,
+          "beat": 4.0,
+          "expected": "E4",
+          "performed": "C5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 19,
+          "measure": 7,
+          "beat": 1.0,
+          "expected": "E4",
+          "performed": "D5"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 20,
+          "measure": 7,
+          "beat": 2.0,
+          "expected": "D4",
+          "performed": "D#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 21,
+          "measure": 7,
+          "beat": 3.0,
+          "expected": "D4",
+          "performed": "F4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 22,
+          "measure": 7,
+          "beat": 4.0,
+          "expected": "E4",
+          "performed": "A#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 23,
+          "measure": 8,
+          "beat": 1.0,
+          "expected": "D4",
+          "performed": "A#4"
+        },
+        {
+          "type": "wrong_pitch",
+          "reference_note_index": 24,
+          "measure": 8,
+          "beat": 3.0,
+          "expected": "G4",
+          "performed": "F5"
+        }
+      ]
+    },
+    {
+      "score_id": "jingle-bells",
+      "file": "twinkle-twinkle-unrelated.wav",
+      "description": "A correctly played but unrelated public-domain melody.",
+      "duration_seconds": 8.6,
+      "expected_outcome": "Very low accuracy because the selected reference is Jingle Bells.",
+      "expected_errors": [
+        {
+          "type": "unrelated_piece",
+          "expected": "Jingle Bells",
+          "performed": "Twinkle Twinkle Little Star"
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-perfect.wav",
+      "description": "Exact two-hand reference performance from the selected 16-bar score.",
+      "duration_seconds": 39.0,
+      "expected_outcome": null,
+      "expected_errors": []
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-slower.wav",
+      "description": "The entire two-hand performance is consistently played at 75 BPM.",
+      "duration_seconds": 51.8,
+      "expected_outcome": "High relative accuracy with a 75 BPM tempo notice.",
+      "expected_errors": [
+        {
+          "type": "tempo_change",
+          "reference_bpm": 100,
+          "performed_bpm": 75
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-transposed.wav",
+      "description": "Both hands are transposed two semitones above the F-major reference.",
+      "duration_seconds": 39.0,
+      "expected_outcome": "High relative accuracy with a G major transposition notice.",
+      "expected_errors": [
+        {
+          "type": "transposition",
+          "semitones": 2,
+          "from": "F major",
+          "to": "G major"
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-partial.wav",
+      "description": "Only the first eight measures are attempted.",
+      "duration_seconds": 19.8,
+      "expected_outcome": "Score only the attempted half and report approximately 50% coverage.",
+      "expected_errors": [
+        {
+          "type": "partial_performance",
+          "played_measures": 8,
+          "total_measures": 16
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-overplayed.wav",
+      "description": "The complete score is followed by two additional right-hand notes.",
+      "duration_seconds": 40.1,
+      "expected_outcome": "Complete performance with two notes after the first ending.",
+      "expected_errors": [
+        {
+          "type": "overplayed",
+          "extra_notes_after_end": 2
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-wrong-note.wav",
+      "description": "The right hand plays B4 instead of C5 at the start of measure 11.",
+      "duration_seconds": 39.0,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "measure": 11,
+          "beat": 1.0,
+          "expected": "C5",
+          "performed": "B4"
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-late-note.wav",
+      "description": "The right-hand A4 starts 320 ms after the left-hand downbeat in measure 13.",
+      "duration_seconds": 39.0,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "late_note",
+          "measure": 13,
+          "beat": 1.0,
+          "expected": "A4",
+          "offset_ms": 320
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-mixed-errors.wav",
+      "description": "A wrong melody note, extra tone, hand desynchronization and missed bass root.",
+      "duration_seconds": 39.0,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "measure": 11,
+          "beat": 1.0,
+          "expected": "C5",
+          "performed": "B4"
+        },
+        {
+          "type": "extra_note",
+          "measure": 12,
+          "beat": 2.5,
+          "performed": "F#4"
+        },
+        {
+          "type": "late_note",
+          "measure": 14,
+          "beat": 4.0,
+          "expected": "E4",
+          "offset_ms": 320
+        },
+        {
+          "type": "missed_note",
+          "measure": 15,
+          "beat": 1.0,
+          "expected": "A#2"
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-very-poor.wav",
+      "description": "The original rhythm is retained while pitches in both hands are changed inconsistently.",
+      "duration_seconds": 39.0,
+      "expected_outcome": "Very low pitch accuracy without being treated as one transposition.",
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "scope": "most_notes"
+        }
+      ]
+    },
+    {
+      "score_id": "titanic-theme",
+      "file": "titanic-other-melody.wav",
+      "description": "A correct Jingle Bells performance submitted against the Titanic reference.",
+      "duration_seconds": 16.6,
+      "expected_outcome": "Very low accuracy because a different piece was performed.",
+      "expected_errors": [
+        {
+          "type": "unrelated_piece",
+          "expected": "My Heart Will Go On",
+          "performed": "Jingle Bells"
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-perfect.wav",
+      "description": "Clean plucked-string rendering of the eight-bar reference.",
+      "duration_seconds": 20.2875,
+      "expected_outcome": null,
+      "expected_errors": []
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-slower.wav",
+      "description": "The complete arpeggio is played consistently at 72 BPM.",
+      "duration_seconds": 26.85,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "tempo_change",
+          "reference_bpm": 96,
+          "performed_bpm": 72
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-transposed.wav",
+      "description": "The entire guitar figure is transposed two semitones higher.",
+      "duration_seconds": 20.2875,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "transposition",
+          "semitones": 2,
+          "from": "A minor",
+          "to": "B minor"
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-partial.wav",
+      "description": "Only the first four measures are attempted.",
+      "duration_seconds": 10.44375,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "partial_performance",
+          "played_measures": 4,
+          "total_measures": 8
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-overplayed.wav",
+      "description": "The correct excerpt is followed by two extra guitar notes.",
+      "duration_seconds": 21.6875,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "overplayed",
+          "extra_notes_after_end": 2
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-wrong-note.wav",
+      "description": "One upper note is played one fret too low in measure 3.",
+      "duration_seconds": 20.2875,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "measure": 3,
+          "beat": 2.5,
+          "expected": "B3",
+          "performed": "A#3"
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-late-note.wav",
+      "description": "The second picked note in measure 5 starts 320 ms late.",
+      "duration_seconds": 20.2875,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "late_note",
+          "measure": 5,
+          "beat": 1.5,
+          "expected": "E3",
+          "offset_ms": 320
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-mixed-errors.wav",
+      "description": "Wrong fret, extra string noise, omitted note and late pick in one take.",
+      "duration_seconds": 20.2875,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "measure": 3,
+          "beat": 2.5
+        },
+        {
+          "type": "extra_note",
+          "measure": 4,
+          "performed": "F#3"
+        },
+        {
+          "type": "missed_note",
+          "measure": 6,
+          "expected": "G3"
+        },
+        {
+          "type": "late_note",
+          "measure": 7,
+          "expected": "C4",
+          "offset_ms": 320
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-very-poor.wav",
+      "description": "The picking rhythm remains, but nearly every fret is wrong.",
+      "duration_seconds": 20.2875,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "wrong_pitch",
+          "scope": "most_notes"
+        }
+      ]
+    },
+    {
+      "score_id": "californication-guitar",
+      "file": "californication-other-melody.wav",
+      "description": "A Jingle Bells take submitted against the guitar reference.",
+      "duration_seconds": 16.6,
+      "expected_outcome": null,
+      "expected_errors": [
+        {
+          "type": "unrelated_piece",
+          "expected": "Californication",
+          "performed": "Jingle Bells"
+        }
+      ]
+    }
+  ]
+}

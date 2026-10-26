@@ -1,0 +1,22 @@
+node_modules
+dist
+.vite
+.vercel
+*.local
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+backend/.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Local recordings and source-project files are not part of the public demo.
+backend/fixtures/audio/test folder/
+
+# Generated scratch artifacts.
+tmp/
+work/
+
+.vercel
